@@ -1,13 +1,18 @@
-import * as UserController from "./UserController";
+import * as UsersController from "./UsersController";
 
 export default [
     {
-        path: "/api/v1/user",
+        path: "/users",
         method: "get",
-        handler: UserController.getUser
+        handler: UsersController.getAllUsers
         // async ({ query }: Request, res: Response) => {
         //     const result = await getPlacesByName(query.q);
         //     res.status(200).send(result);
         // }
+    },
+    {
+        path: "/users/:id",
+        method: "get",
+        handler: UsersController.getUserById
     }
 ];

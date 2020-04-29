@@ -3,7 +3,7 @@ import * as AuthController from "./AuthController";
 
 export default [
     {
-        path: "/api/v1/auth",
+        path: "/auth",
         method: "get",
         handler: [
             exampleMiddleware,
