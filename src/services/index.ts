@@ -1,7 +1,5 @@
-import usersRoutes from "./users/routes";
-import authRoutes from "./auth/routes";
+import userRoutes from "./user/routes";
 
 export default [
-    ...usersRoutes,
-    ...authRoutes
+    ...userRoutes
 ];

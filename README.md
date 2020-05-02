@@ -1,7 +1,1 @@
-Validate request parameters. JOI (npm)
-
-Knex => typescript
-
-User Model
-
-Authentication
+Backend for LessonScribe alpha.

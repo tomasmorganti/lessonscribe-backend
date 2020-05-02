@@ -1,4 +1,4 @@
-import connectDatabase from "./db";
+import database from "./db";
 import http from "http";
 import express from "express";
 import applyMiddleware from "./utils/applyMiddleware";
@@ -18,7 +18,7 @@ const startServer = async () => {
         process.exit(1);
     });
 
-    await connectDatabase();
+    await database();
 
     const router = express();
     applyMiddleware(middleware, router);
