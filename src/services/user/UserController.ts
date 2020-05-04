@@ -10,7 +10,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const getUserById = async (req: Request, res: Response) => {
     const user = await UsersService.getUserById(req.params.id);
     if (!user) {
-        throw new HTTP404Error("User not found!");
+        throw new HTTP404Error("user not found!");
     };
     res.status(200).send(user);
 };
@@ -18,8 +18,14 @@ export const getUserById = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
     const { email, password, passwordConfirm } = req.body;
     if (password !== passwordConfirm) {
-        throw new HTTP400Error("Passwords do not match!");
+        throw new HTTP400Error("passwords do not match!");
     };
+
+    const usersWithEmail = await UsersService.getUsersByEmail(email);
+    if (usersWithEmail[0]) {
+        throw new HTTP400Error("email in use");
+    };
+
     const createdUser = await UsersService.createUser({
         email,
         password

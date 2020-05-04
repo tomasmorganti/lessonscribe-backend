@@ -16,3 +16,7 @@ export const getAllUsers = async () => {
 export const getUserById = async (id: string) => {
     return await User.query().findById(id);
 };
+
+export const getUsersByEmail = async (email: string) => {
+    return await User.query().where('email', '=', email);
+};
