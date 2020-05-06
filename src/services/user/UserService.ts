@@ -1,4 +1,4 @@
-import User from "../../models/User";
+import User from '../../models/User';
 
 type NewUser = {
     email: string;
@@ -6,11 +6,11 @@ type NewUser = {
 };
 
 export const createUser = async (newUser: NewUser) => {
-    return await User.query().insert(newUser).returning("*");
+    return await User.query().insert(newUser).returning('*');
 };
 
 export const getAllUsers = async () => {
-    return await User.query().select("*");
+    return await User.query().select('*');
 };
 
 export const getUserById = async (id: string) => {

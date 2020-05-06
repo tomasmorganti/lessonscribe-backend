@@ -1,10 +1,6 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response, NextFunction } from 'express';
 
-type Handler = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => Promise<void> | void;
+type Handler = (req: Request, res: Response, next: NextFunction) => Promise<void> | void;
 
 type Route = {
     path: string;

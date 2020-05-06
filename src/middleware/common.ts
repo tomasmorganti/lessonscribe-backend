@@ -1,8 +1,8 @@
-import { Router } from "express";
-import helmet from "helmet";
-import cors from "cors";
-import parser from "body-parser";
-import compression from "compression";
+import { Router } from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import parser from 'body-parser';
+import compression from 'compression';
 
 const applyHelmet = (router: Router) => {
     router.use(helmet());
@@ -21,9 +21,4 @@ const handleCompression = (router: Router) => {
     router.use(compression());
 };
 
-export default [
-    applyHelmet,
-    handleCors,
-    handleBodyRequestParsing,
-    handleCompression
-];
+export default [applyHelmet, handleCors, handleBodyRequestParsing, handleCompression];
