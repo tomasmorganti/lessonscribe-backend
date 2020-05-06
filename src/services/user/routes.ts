@@ -8,16 +8,20 @@ export default [
         handler: UsersController.getAllUsers
     },
     {
-        path: "/user/:id",
+        path: "/user",
         method: "get",
         handler: [
             validateParams({
                 properties: {
-                    id: { type: 'number' }
+                    id: { type: "number" },
+                    email: { type: "string" }
                 },
-                required: ['id']
+                oneOf: [
+                    { required: ['id'] },
+                    { required: ['email'] }
+                ]
             }),
-            UsersController.getUserById
+            UsersController.getUserByIdOrEmail
         ]
     },
     {

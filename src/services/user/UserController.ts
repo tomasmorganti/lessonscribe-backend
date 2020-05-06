@@ -7,8 +7,16 @@ export const getAllUsers = async (req: Request, res: Response) => {
     res.status(200).send(users);
 };
 
-export const getUserById = async (req: Request, res: Response) => {
-    const user = await UsersService.getUserById(req.params.id);
+export const getUserByIdOrEmail = async (req: Request, res: Response) => {
+    let user;
+
+    if (req.query.id) {
+        user = await UsersService.getUserById(req.query.id as string);
+    } else {
+        const usersArray = await UsersService.getUsersByEmail(req.query.email as string);
+        user = usersArray[0];
+    }
+
     if (!user) {
         throw new HTTP404Error("user not found!");
     };
