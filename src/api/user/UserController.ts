@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { HTTP400Error, HTTP401Error, HTTP404Error } from '../../utils/httpErrors';
-import * as UserService from './UserService';
+import UserService from '../../services/user';
 import * as argon2 from 'argon2';
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -41,5 +41,25 @@ export const createUser = async (req: Request, res: Response) => {
         id: createdUser.id,
         email: createdUser.email,
         createdAt: createdUser.created_at,
+    });
+};
+
+export const loginUser = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+
+    const user = await UserService.getUserByEmail(email);
+    if (!user) {
+        throw new HTTP401Error('username or password incorrect.');
+    } else {
+        const correctPassword = await argon2.verify(user.password, password);
+        if (!correctPassword) {
+            throw new HTTP401Error('username or password incorrect.');
+        }
+    }
+
+    const token = UserService.generateTokenForUser(user.id);
+
+    res.status(200).send({
+        token
     });
 };

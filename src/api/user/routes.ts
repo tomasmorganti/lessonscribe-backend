@@ -1,4 +1,4 @@
-import * as UsersController from './UserController';
+import * as UserController from './UserController';
 import validateParams from '../../middleware/validateParams';
 
 export default [
@@ -6,7 +6,7 @@ export default [
         path: '/users',
         method: 'get',
         checkAuth: true,
-        handler: [UsersController.getAllUsers],
+        handler: [UserController.getAllUsers],
     },
     {
         path: '/user',
@@ -20,7 +20,7 @@ export default [
                 },
                 oneOf: [{ required: ['id'] }, { required: ['email'] }],
             }),
-            UsersController.getUserByIdOrEmail,
+            UserController.getUserByIdOrEmail,
         ],
     },
     {
@@ -36,7 +36,22 @@ export default [
                 },
                 required: ['email', 'password', 'passwordConfirm'],
             }),
-            UsersController.createUser,
+            UserController.createUser,
+        ],
+    },
+    {
+        path: '/login',
+        method: 'post',
+        checkAuth: false,
+        handler: [
+            validateParams({
+                properties: {
+                    email: { type: 'string', minLength: 1, maxLength: 255 },
+                    password: { type: 'string', minLength: 1, maxLength: 255 },
+                },
+                required: ['email', 'password'],
+            }),
+            UserController.loginUser,
         ],
     },
 ];

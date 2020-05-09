@@ -1,4 +1,5 @@
 import User from '../../models/User';
+import * as jwt from 'jsonwebtoken'
 
 export const createUser = async (email: string, password: string) => {
     return await User.query()
@@ -20,4 +21,11 @@ export const getUserById = async (id: string) => {
 export const getUserByEmail = async (email: string) => {
     const userArray = await User.query().where('email', '=', email);
     return userArray[0];
+};
+
+export const generateTokenForUser = (id: number) => {
+    const secret = 'MySuP3R_z3kr3t';
+    const expiration = '7d';
+
+    return jwt.sign({ id }, secret, { expiresIn: expiration });
 };
