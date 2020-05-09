@@ -5,11 +5,13 @@ export default [
     {
         path: '/users',
         method: 'get',
-        handler: UsersController.getAllUsers,
+        checkAuth: true,
+        handler: [UsersController.getAllUsers],
     },
     {
         path: '/user',
         method: 'get',
+        checkAuth: true,
         handler: [
             validateParams({
                 properties: {
@@ -24,6 +26,7 @@ export default [
     {
         path: '/user',
         method: 'post',
+        checkAuth: false,
         handler: [
             validateParams({
                 properties: {
