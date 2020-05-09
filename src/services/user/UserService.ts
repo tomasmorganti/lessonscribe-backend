@@ -24,8 +24,8 @@ export const getUserByEmail = async (email: string) => {
 };
 
 export const generateTokenForUser = (id: number) => {
-    const secret = 'MySuP3R_z3kr3t';
-    const expiration = '7d';
+    const secret = process.env.TOKEN_SECRET as string;
+    const expiration = process.env.TOKEN_SECRET;
 
     return jwt.sign({ id }, secret, { expiresIn: expiration });
 };
