@@ -3,8 +3,9 @@ exports.up = function (knex) {
         table.increments().primary();
         table.string('email').unique().notNullable();
         table.string('password').notNullable();
-        table.timestamp('updated_at').defaultTo(knex.fn.now());
-        table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.enu('role', ['admin', 'user'], { useNative: true, enumName: 'user_role' }).notNullable();
+        table.boolean('active').defaultTo(1);
+        table.timestamps();
     });
 };
 

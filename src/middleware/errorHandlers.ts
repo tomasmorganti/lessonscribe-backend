@@ -7,8 +7,8 @@ const handle401Error = (router: Router) => {
             ErrorHandler.unauthorizedError();
         }
         next(err);
-    })
-}
+    });
+};
 
 const handle404Error = (router: Router) => {
     router.use((req: Request, res: Response) => {
