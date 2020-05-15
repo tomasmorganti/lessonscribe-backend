@@ -13,7 +13,7 @@ const getErrorMessageFromAjv = (errorObject: Ajv.ErrorObject) => {
     if (['minLength', 'maxLength', 'type'].includes(errorObject.keyword)) {
         return `${errorObject.dataPath.replace('.', '')} ${errorObject.message}`;
     } else if (['oneOf'].includes(errorObject.keyword)) {
-        return 'too many request parameters.';
+        return 'Too many request parameters.';
     }
 
     return errorObject.message;
@@ -35,7 +35,7 @@ export default (paramSchema: ParamSchema) => {
         }
         const validated = ajv.validate(paramSchema, requestParamObj);
         if (!validated) {
-            const errorMessage = ajv.errors ? getErrorMessageFromAjv(ajv.errors[0]) : 'bad request.';
+            const errorMessage = ajv.errors ? getErrorMessageFromAjv(ajv.errors[0]) : 'Bad request.';
             throw new HTTP400Error(errorMessage);
         } else {
             next();

@@ -3,8 +3,7 @@ import { Model } from 'objection';
 export default class Instructor extends Model {
     readonly id!: number;
     user_id!: number;
-    first_name?: string;
-    last_name?: string;
+    name?: string;
     contact_email?: string;
     phone?: string;
     created_at: any;

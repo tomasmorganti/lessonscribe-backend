@@ -1,10 +1,11 @@
 import * as UserController from './UserController';
 import checkAuth from '../../middleware/checkAuth';
+import checkRole from '../../middleware/checkRole';
 import validateParams from '../../middleware/validateParams';
 
 export default [
     {
-        path: '/user',
+        path: '/signup',
         method: 'post',
         handler: [
             validateParams({
@@ -23,6 +24,7 @@ export default [
         method: 'post',
         handler: [
             checkAuth,
+            checkRole('admin'),
             validateParams({
                 properties: {
                     email: { type: 'string', minLength: 1, maxLength: 255 },
@@ -46,6 +48,21 @@ export default [
                 required: ['email', 'password'],
             }),
             UserController.loginUser,
+        ],
+    },
+    {
+        path: '/login-as',
+        method: 'post',
+        handler: [
+            checkAuth,
+            checkRole('admin'),
+            validateParams({
+                properties: {
+                    email: { type: 'string', minLength: 1, maxLength: 255 },
+                },
+                required: ['email'],
+            }),
+            UserController.loginAsUser,
         ],
     },
 ];

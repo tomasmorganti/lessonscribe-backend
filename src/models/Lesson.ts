@@ -1,7 +1,7 @@
 import { Model } from 'objection';
 
 export default class Lesson extends Model {
-    id!: any;
+    readonly id!: any;
     instructor_id!: number;
     student_id!: number;
     status!: string;

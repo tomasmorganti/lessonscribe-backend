@@ -18,7 +18,7 @@ exports.seed = function (knex) {
                     email: 'user@schleem.com',
                     password: userPassword,
                     role: 'user',
-                }
+                },
             ]);
         });
 };

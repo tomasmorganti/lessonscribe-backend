@@ -1,31 +1,40 @@
 import User from '../models/User';
-import * as AuthService from './AuthService';
+import * as InstructorService from './InstructorService';
 import { HTTP400Error, HTTP401Error } from '../utils/httpErrors';
+import * as jwt from 'jsonwebtoken';
+import * as argon2 from 'argon2';
 
-// export const getUserById = async (id: string) => {
-//     const user = await User.query().findById(id);
-//     if (!user) {
-//         throw new HTTP400Error('user not found.');
-//     }
-//     return user;
-// };
+const generateTokenForUser = (id: number, role: string) => {
+    const secret = process.env.TOKEN_SECRET as string;
+    const tokenExpirationTime = process.env.TOKEN_EXP;
 
-export const getUserByEmail = async (email: string) => {
+    return jwt.sign({ id, role }, secret, { expiresIn: tokenExpirationTime });
+};
+
+const hashPassword = (password: string) => {
+    return argon2.hash(password);
+};
+
+const verifyPassword = (hashedPassword: string, providedPassword: string) => {
+    return argon2.verify(hashedPassword, providedPassword);
+};
+
+const getUserByEmail = async (email: string) => {
     const usersArray = await User.query().where('email', '=', email);
     return usersArray[0];
 };
 
 export const createUser = async (email: string, password: string, passwordConfirm: string, role: string) => {
     if (password !== passwordConfirm) {
-        throw new HTTP400Error('passwords do not match!');
+        throw new HTTP400Error('Passwords do not match');
     }
 
     const userWithEmail = await getUserByEmail(email);
     if (userWithEmail) {
-        throw new HTTP400Error('email in use');
+        throw new HTTP400Error('Email in use');
     }
 
-    const hashedPassword = await AuthService.hashPassword(password);
+    const hashedPassword = await hashPassword(password);
 
     const createdUser = await User.query()
         .insert({
@@ -34,37 +43,42 @@ export const createUser = async (email: string, password: string, passwordConfir
             role,
         })
         .returning('*');
+
+    if (role === 'user') {
+        try {
+            await InstructorService.createInstructor(createdUser.id, createdUser.email);
+        } catch (e) {
+            console.log('User created successfully. Error creating instructor: ', e);
+        }
+    }
     return createdUser;
 };
 
 export const loginUser = async (email: string, password: string) => {
     const user = await getUserByEmail(email);
     if (!user) {
-        throw new HTTP401Error('username or password incorrect.');
+        throw new HTTP401Error('Username or password incorrect');
     } else {
-        const correctPassword = await AuthService.verifyPassword(user.password as string, password);
+        const correctPassword = await verifyPassword(user.password as string, password);
         if (!correctPassword) {
-            throw new HTTP401Error('username or password incorrect.');
+            throw new HTTP401Error('Username or password incorrect');
         }
     }
-    const token = AuthService.generateTokenForUser(user.id, user.role);
-    return token;
+    const token = generateTokenForUser(user.id, user.role);
+    return {
+        id: user.id,
+        token,
+    };
 };
 
-export const createAdminUser = async (email: string, password: string) => {
-    const userWithEmail = await getUserByEmail(email);
-    if (userWithEmail) {
-        throw new HTTP400Error('email in use');
+export const loginAsUser = async (email: string) => {
+    const user = await getUserByEmail(email);
+    if (!user) {
+        throw new HTTP400Error('User not found');
     }
-
-    const hashedPassword = await AuthService.hashPassword(password);
-
-    const createdAdminUser = await User.query()
-        .insert({
-            email,
-            password: hashedPassword,
-            role: 'admin',
-        })
-        .returning('*');
-    return createdAdminUser;
+    const token = generateTokenForUser(user.id, user.role);
+    return {
+        id: user.id,
+        token,
+    };
 };

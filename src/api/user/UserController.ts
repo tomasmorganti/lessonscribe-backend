@@ -28,9 +28,21 @@ export const addAdminUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const token = await UserService.loginUser(email, password);
+    const user = await UserService.loginUser(email, password);
 
     res.status(200).send({
-        token
+        id: user.id,
+        token: user.token,
+    });
+};
+
+export const loginAsUser = async (req: Request, res: Response) => {
+    const { email } = req.body;
+
+    const user = await UserService.loginAsUser(email);
+
+    res.status(200).send({
+        id: user.id,
+        token: user.token,
     });
 };
