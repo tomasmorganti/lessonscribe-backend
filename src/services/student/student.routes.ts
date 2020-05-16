@@ -1,22 +1,24 @@
-import * as InstructorController from './InstructorController';
-import checkAuth from '../../middleware/checkAuth';
+import * as StudentController from './student.controller';
 import validateParams from '../../middleware/validateParams';
+import checkAuth from '../../middleware/checkAuth';
 
 export default [
     {
-        path: '/instructor',
-        method: 'patch',
+        path: '/student',
+        method: 'post',
         handler: [
             checkAuth,
             validateParams({
                 properties: {
+                    instructorId: { type: 'number' },
                     name: { type: 'string', minLength: 1, maxLength: 255 },
                     email: { type: 'string', minLength: 1, maxLength: 255 },
                     phone: { type: 'string', minLength: 1, maxLength: 50 },
+                    level: { enum: ['beginner', 'intermediate', 'advanced'] },
                 },
-                anyOf: [{ required: ['name'] }, { required: ['email'] }, { required: ['phone'] }],
+                required: ['instructorId', 'name'],
             }),
-            InstructorController.updateInstructorInfo,
+            StudentController.addNewStudent,
         ],
     },
 ];

@@ -1,6 +1,6 @@
-import Student from '../models/Student';
-import { getInstructorByUserId } from './InstructorService';
-import { HTTP401Error, HTTP400Error } from '../utils/httpErrors';
+import Student from './student.model';
+import { getInstructorByUserId } from '../instructor/instructor.service';
+import { HTTP401Error, HTTP400Error } from '../../utils/httpErrors';
 
 type NewStudentData = {
     instructor_id: number;

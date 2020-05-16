@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as StudentService from '../../services/StudentService';
+import * as StudentService from './student.service';
 
 export const addNewStudent = async (req: Request, res: Response) => {
     //@ts-ignore

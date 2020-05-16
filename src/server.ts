@@ -5,7 +5,7 @@ import applyMiddleware from './utils/applyMiddleware';
 import applyRoutes from './utils/applyRoutes';
 import commonMiddleware from './middleware/common';
 import errorHandlers from './middleware/errorHandlers';
-import routes from './api';
+import routes from './services';
 
 const startServer = async () => {
     process.on('uncaughtException', (e) => {

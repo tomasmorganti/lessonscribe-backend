@@ -1,4 +1,4 @@
-import * as UserController from './UserController';
+import * as UserController from './user.controller';
 import checkAuth from '../../middleware/checkAuth';
 import checkRole from '../../middleware/checkRole';
 import validateParams from '../../middleware/validateParams';

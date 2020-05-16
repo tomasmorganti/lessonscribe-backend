@@ -1,6 +1,6 @@
-import User from '../models/User';
-import * as InstructorService from './InstructorService';
-import { HTTP400Error, HTTP401Error } from '../utils/httpErrors';
+import User from './user.model';
+import { createInstructor } from '../instructor/instructor.service';
+import { HTTP400Error, HTTP401Error } from '../../utils/httpErrors';
 import * as jwt from 'jsonwebtoken';
 import * as argon2 from 'argon2';
 
@@ -46,7 +46,7 @@ export const createUser = async (email: string, password: string, passwordConfir
 
     if (role === 'user') {
         try {
-            await InstructorService.createInstructor(createdUser.id, createdUser.email);
+            await createInstructor(createdUser.id, createdUser.email);
         } catch (e) {
             console.log('User created successfully. Error creating instructor: ', e);
         }
