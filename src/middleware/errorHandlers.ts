@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import * as ErrorHandler from '../utils/ErrorHandler';
+import * as Errors from '../utils/Errors';
 
 const handle401Error = (router: Router) => {
     router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         if (err.name === 'UnauthorizedError') {
-            ErrorHandler.unauthorizedError();
+            Errors.unauthorizedError();
         }
         next(err);
     });
@@ -12,19 +12,19 @@ const handle401Error = (router: Router) => {
 
 const handle404Error = (router: Router) => {
     router.use((req: Request, res: Response) => {
-        ErrorHandler.notFoundError();
+        Errors.notFoundError();
     });
 };
 
 const handleClientError = (router: Router) => {
     router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-        ErrorHandler.clientError(err, res, next);
+        Errors.clientError(err, res, next);
     });
 };
 
 const handleServerError = (router: Router) => {
     router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-        ErrorHandler.serverError(err, res, next);
+        Errors.serverError(err, res, next);
     });
 };
 
