@@ -9,5 +9,5 @@ export const updateInstructorInfo = async (req: Request, res: Response) => {
 
     const updatedInstructor = await InstructorService.updateInstructorInfo(userId, { name, contact_email, phone });
 
-    res.status(200).send(updatedInstructor)
+    res.status(200).send(updatedInstructor);
 };

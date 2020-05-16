@@ -11,7 +11,7 @@ type ParamSchema = {
 };
 
 const getErrorMessageFromAjv = (errorObject: Ajv.ErrorObject) => {
-    if (['minLength', 'maxLength', 'type'].includes(errorObject.keyword)) {
+    if (['minLength', 'maxLength', 'type', 'enum'].includes(errorObject.keyword)) {
         return `${errorObject.dataPath.replace('.', '')} ${errorObject.message}`;
     }
     if (['oneOf'].includes(errorObject.keyword)) {

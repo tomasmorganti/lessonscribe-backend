@@ -5,6 +5,7 @@ export default class Student extends Model {
     instructor_id!: number;
     name!: string;
     contact_email?: string;
+    phone?: string;
     level?: string;
     active!: boolean;
     created_at: any;
@@ -39,8 +40,10 @@ export default class Student extends Model {
         return {
             type: 'object',
             properties: {
+                instructor_id: { type: 'number' },
                 name: { type: 'string', minLength: 1, maxLength: 255 },
                 contact_email: { type: 'string', minLength: 1, maxLength: 255 },
+                phone: { type: 'string', minLength: 1, maxLength: 50 },
                 level: { enum: ['beginner', 'intermediate', 'advanced'] },
             },
         };
