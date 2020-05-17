@@ -6,8 +6,9 @@ export default class Instructor extends Model {
     name?: string;
     contact_email?: string;
     phone?: string;
-    created_at: any;
-    updated_at: any;
+    active!: boolean;
+    created_at!: Date;
+    updated_at!: Date;
 
     static get tableName() {
         return 'instructors';

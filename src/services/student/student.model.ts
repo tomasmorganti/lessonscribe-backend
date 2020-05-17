@@ -8,8 +8,8 @@ export default class Student extends Model {
     phone?: string;
     level?: string;
     active!: boolean;
-    created_at: any;
-    updated_at: any;
+    created_at!: Date;
+    updated_at!: Date;
 
     static get tableName() {
         return 'students';
@@ -46,6 +46,7 @@ export default class Student extends Model {
                 phone: { type: 'string', minLength: 1, maxLength: 50 },
                 level: { enum: ['beginner', 'intermediate', 'advanced'] },
             },
+            required: ['instructor_id', 'name'],
         };
     }
 }

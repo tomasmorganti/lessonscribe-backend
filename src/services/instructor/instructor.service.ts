@@ -13,11 +13,11 @@ export const getInstructorByUserId = async (id: number) => {
 };
 
 export const createInstructor = async (userId: number, email: string) => {
-    const instructor = await Instructor.query().insert({
+    const createdInstructor = await Instructor.query().insert({
         user_id: userId,
         contact_email: email,
     });
-    return instructor;
+    return createdInstructor;
 };
 
 export const updateInstructorInfo = async (userId: number, instructorData: UpdateInstructorData) => {

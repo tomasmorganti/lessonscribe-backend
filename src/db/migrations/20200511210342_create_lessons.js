@@ -5,11 +5,14 @@ exports.up = function (knex) {
             table.integer('instructor_id').unsigned().notNullable();
             table.integer('student_id').unsigned().notNullable();
             table
-                .enu('status', ['scheduled', 'complete', 'canceled'], { useNative: true, enumName: 'lesson_status' })
+                .enu('status', ['scheduled', 'rescheduled', 'completed', 'canceled'], {
+                    useNative: true,
+                    enumName: 'lesson_status',
+                })
                 .notNullable()
                 .defaultTo('scheduled');
-            table.datetime('start_time').notNullable();
-            table.datetime('end_time').notNullable();
+            table.datetime('start_datetime').notNullable();
+            table.datetime('end_datetime').notNullable();
             table.timestamp('created_at').defaultTo(knex.fn.now());
             table.timestamp('updated_at').defaultTo(knex.fn.now());
             table.foreign('instructor_id').references('id').inTable('instructors');

@@ -1,14 +1,15 @@
 import { Model } from 'objection';
+import { v4 } from 'uuid/interfaces';
 
 export default class Lesson extends Model {
-    readonly id!: any;
+    id!: v4;
     instructor_id!: number;
     student_id!: number;
     status!: string;
-    start_time!: any;
-    end_time!: any;
-    created_at: any;
-    updated_at: any;
+    start_datetime!: Date;
+    end_datetime!: Date;
+    created_at!: Date;
+    updated_at!: Date;
 
     static get tableName() {
         return 'lessons';
@@ -39,8 +40,14 @@ export default class Lesson extends Model {
         return {
             type: 'object',
             properties: {
-                status: { enum: ['scheduled', 'complete', 'canceled'] },
+                id: { type: 'string', format: 'uuid' },
+                instructor_id: { type: 'number' },
+                student_id: { type: 'number' },
+                status: { enum: ['scheduled', 'rescheduled', 'completed', 'canceled'] },
+                start_datetime: { type: 'string', format: 'date-time' },
+                end_datetime: { type: 'string', format: 'date-time' },
             },
+            required: ['id', 'instructor_id', 'student_id', 'start_datetime', 'end_datetime'],
         };
     }
 }
