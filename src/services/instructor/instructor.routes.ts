@@ -1,4 +1,5 @@
-import * as InstructorController from './instructor.controller';
+import { Request, Response } from 'express';
+import * as InstructorService from './instructor.service';
 import checkAuth from '../../middleware/checkAuth';
 import validateParams from '../../middleware/validateParams';
 
@@ -16,7 +17,19 @@ export default [
                 },
                 anyOf: [{ required: ['name'] }, { required: ['email'] }, { required: ['phone'] }],
             }),
-            InstructorController.updateInstructorInfo,
+            async (req: Request, res: Response) => {
+                const { instructorId } = req.user;
+
+                const { name, email: contact_email, phone } = req.body;
+
+                const updatedInstructor = await InstructorService.updateInstructorInfo(instructorId, {
+                    name,
+                    contact_email,
+                    phone,
+                });
+
+                res.status(200).send(updatedInstructor);
+            },
         ],
     },
 ];

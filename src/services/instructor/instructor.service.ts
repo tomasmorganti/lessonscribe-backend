@@ -20,11 +20,8 @@ export const createInstructor = async (userId: number, email: string) => {
     return createdInstructor;
 };
 
-export const updateInstructorInfo = async (userId: number, instructorData: UpdateInstructorData) => {
-    const updatedInstructorArray = await Instructor.query()
-        .patch(instructorData)
-        .where('user_id', '=', userId)
-        .returning('*');
+export const updateInstructorInfo = async (instructorId: number, data: UpdateInstructorData) => {
+    const updatedInstructorArray = await Instructor.query().patch(data).where('id', instructorId).returning('*');
     if (!updatedInstructorArray[0]) {
         throw new HTTP400Error('Instructor not found');
     }

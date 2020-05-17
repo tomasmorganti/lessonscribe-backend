@@ -1,7 +1,7 @@
 import knex from 'knex';
 import { Model } from 'objection';
-// @ts-ignore
-import knexConfig from '../../knexfile';
+
+const knexConfig = require('../../knexfile');
 
 export default async () => {
     console.log('Starting database connection...');

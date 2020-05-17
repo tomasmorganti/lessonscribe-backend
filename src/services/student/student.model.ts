@@ -45,6 +45,7 @@ export default class Student extends Model {
                 contact_email: { type: 'string', minLength: 1, maxLength: 255 },
                 phone: { type: 'string', minLength: 1, maxLength: 50 },
                 level: { enum: ['beginner', 'intermediate', 'advanced'] },
+                active: { type: 'boolean' },
             },
             required: ['instructor_id', 'name'],
         };

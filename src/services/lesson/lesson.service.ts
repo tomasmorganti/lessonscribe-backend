@@ -11,14 +11,7 @@ type NewLessonData = {
     end_datetime: Date;
 };
 
-export const createLesson = async (userId: number, lessonData: NewLessonData) => {
-    //TODO: auth middleware? or in Instructor service?
-    const instructorByUserId = await getInstructorByUserId(userId);
-    if (instructorByUserId.id !== lessonData.instructor_id) {
-        console.log(`Instructor ID in request does not match the requesting user's instructor ID.`);
-        throw new HTTP401Error('Unauthorized');
-    }
-
+export const createLesson = async (lessonData: NewLessonData) => {
     const newLesson = { id: uuidv4(), ...lessonData };
 
     const createdLesson = await Lesson.query().insert(newLesson).returning('*');

@@ -1,12 +1,17 @@
 import User from './user.model';
-import { createInstructor } from '../instructor/instructor.service';
+import { createInstructor, getInstructorByUserId } from '../instructor/instructor.service';
 import { HTTP400Error, HTTP401Error } from '../../utils/httpErrors';
 import * as jwt from 'jsonwebtoken';
 import * as argon2 from 'argon2';
 
-const generateTokenForUser = (id: number, role: string) => {
+const generateTokenForUser = async (id: number, role: string) => {
     const secret = process.env.TOKEN_SECRET as string;
     const tokenExpirationTime = process.env.TOKEN_EXP;
+
+    if (role === 'user') {
+        const instructor = await getInstructorByUserId(id);
+        return jwt.sign({ id, role, instructorId: instructor.id }, secret, { expiresIn: tokenExpirationTime });
+    }
 
     return jwt.sign({ id, role }, secret, { expiresIn: tokenExpirationTime });
 };
@@ -64,7 +69,7 @@ export const loginUser = async (email: string, password: string) => {
             throw new HTTP401Error('Username or password incorrect');
         }
     }
-    const token = generateTokenForUser(user.id, user.role);
+    const token = await generateTokenForUser(user.id, user.role);
     return {
         id: user.id,
         token,

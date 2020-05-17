@@ -33,7 +33,11 @@ export default (paramSchema: ParamSchema) => {
             for (const key of paramSchemaKeys) {
                 requestParamObj[key] = lodash.get(req.body, key);
             }
+            if (req.params.id) {
+                requestParamObj['id'] = req.params.id;
+            }
         }
+        console.log(requestParamObj);
         const validated = ajv.validate(paramSchema, requestParamObj);
         if (!validated) {
             // TODO: Sending all ajv error messages back, rather than just first in array
