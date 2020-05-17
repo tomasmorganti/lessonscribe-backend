@@ -6,8 +6,8 @@ export default class User extends Model {
     password!: string;
     role!: string;
     active!: boolean;
-    created_at!: Date;
-    updated_at!: Date;
+    createdAt!: Date;
+    updatedAt!: Date;
 
     static get tableName() {
         return 'users';

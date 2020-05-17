@@ -3,13 +3,13 @@ import { v4 } from 'uuid/interfaces';
 
 export default class Lesson extends Model {
     id!: v4;
-    instructor_id!: number;
-    student_id!: number;
+    instructorId!: number;
+    studentId!: number;
     status!: string;
-    start_datetime!: Date;
-    end_datetime!: Date;
-    created_at!: Date;
-    updated_at!: Date;
+    startDatetime!: Date;
+    endDatetime!: Date;
+    createdAt!: Date;
+    updatedAt!: Date;
 
     static get tableName() {
         return 'lessons';
@@ -21,7 +21,7 @@ export default class Lesson extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: './Instructor.ts',
                 join: {
-                    from: 'lessons.instructor_id',
+                    from: 'lessons.instructorId',
                     to: 'instructors.id',
                 },
             },
@@ -29,7 +29,7 @@ export default class Lesson extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: './Student.ts',
                 join: {
-                    from: 'lessons.student_id',
+                    from: 'lessons.studentId',
                     to: 'students.id',
                 },
             },
@@ -41,13 +41,13 @@ export default class Lesson extends Model {
             type: 'object',
             properties: {
                 id: { type: 'string', format: 'uuid' },
-                instructor_id: { type: 'number' },
-                student_id: { type: 'number' },
+                instructorId: { type: 'number' },
+                studentId: { type: 'number' },
                 status: { enum: ['scheduled', 'rescheduled', 'completed', 'canceled'] },
-                start_datetime: { type: 'string', format: 'date-time' },
-                end_datetime: { type: 'string', format: 'date-time' },
+                startDatetime: { type: 'string', format: 'date-time' },
+                endDatetime: { type: 'string', format: 'date-time' },
             },
-            required: ['id', 'instructor_id', 'student_id', 'start_datetime', 'end_datetime'],
+            required: ['id', 'instructorId', 'studentId', 'startDatetime', 'endDatetime'],
         };
     }
 }

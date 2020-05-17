@@ -2,14 +2,14 @@ import { Model } from 'objection';
 
 export default class Student extends Model {
     readonly id!: number;
-    instructor_id!: number;
+    instructorId!: number;
     name!: string;
-    contact_email?: string;
+    email?: string;
     phone?: string;
     level?: string;
     active!: boolean;
-    created_at!: Date;
-    updated_at!: Date;
+    createdAt!: Date;
+    updatedAt!: Date;
 
     static get tableName() {
         return 'students';
@@ -21,7 +21,7 @@ export default class Student extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: './Instructor.ts',
                 join: {
-                    from: 'students.instructor_id',
+                    from: 'students.instructorId',
                     to: 'instructors.id',
                 },
             },
@@ -30,7 +30,7 @@ export default class Student extends Model {
                 modelClass: './Lesson.ts',
                 join: {
                     from: 'students.id',
-                    to: 'lessons.student_id',
+                    to: 'lessons.studentId',
                 },
             },
         };
@@ -40,14 +40,14 @@ export default class Student extends Model {
         return {
             type: 'object',
             properties: {
-                instructor_id: { type: 'number' },
+                instructorId: { type: 'number' },
                 name: { type: 'string', minLength: 1, maxLength: 255 },
-                contact_email: { type: 'string', minLength: 1, maxLength: 255 },
+                email: { type: 'string', minLength: 1, maxLength: 255 },
                 phone: { type: 'string', minLength: 1, maxLength: 50 },
                 level: { enum: ['beginner', 'intermediate', 'advanced'] },
                 active: { type: 'boolean' },
             },
-            required: ['instructor_id', 'name'],
+            required: ['instructorId', 'name'],
         };
     }
 }

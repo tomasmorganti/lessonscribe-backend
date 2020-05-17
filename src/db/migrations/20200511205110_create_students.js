@@ -4,7 +4,7 @@ exports.up = function (knex) {
             table.increments().primary();
             table.integer('instructor_id').unsigned().notNullable();
             table.string('name').notNullable();
-            table.string('contact_email');
+            table.string('email');
             table.string('phone');
             table.enu('level', ['beginner', 'intermediate', 'advanced'], {
                 useNative: true,
@@ -36,6 +36,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     if (process.env.NODE_ENV !== 'production') {
-        return knex.schema.dropTableIfExists('students');
+        return knex.raw(`DROP TYPE IF EXISTS student_level CASCADE`).then(() => {
+            return knex.schema.dropTableIfExists('students');
+        });
     }
 };

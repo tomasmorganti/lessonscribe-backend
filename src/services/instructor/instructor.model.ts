@@ -2,13 +2,13 @@ import { Model } from 'objection';
 
 export default class Instructor extends Model {
     readonly id!: number;
-    user_id!: number;
+    userId!: number;
     name?: string;
-    contact_email?: string;
+    email?: string;
     phone?: string;
     active!: boolean;
-    created_at!: Date;
-    updated_at!: Date;
+    createdAt!: Date;
+    updatedAt!: Date;
 
     static get tableName() {
         return 'instructors';
@@ -20,7 +20,7 @@ export default class Instructor extends Model {
                 relation: Model.BelongsToOneRelation,
                 modelClass: './User.ts',
                 join: {
-                    from: 'instructors.user_id',
+                    from: 'instructors.userId',
                     to: 'users.id',
                 },
             },
@@ -29,7 +29,7 @@ export default class Instructor extends Model {
                 modelClass: './Lesson.ts',
                 join: {
                     from: 'instructors.id',
-                    to: 'lessons.instructor_id',
+                    to: 'lessons.instructorId',
                 },
             },
         };
@@ -39,12 +39,12 @@ export default class Instructor extends Model {
         return {
             type: 'object',
             properties: {
-                user_id: { type: 'number' },
+                userId: { type: 'number' },
                 name: { type: 'string', minLength: 1, maxLength: 255 },
-                contact_email: { type: 'string', minLength: 1, maxLength: 255 },
+                email: { type: 'string', minLength: 1, maxLength: 255 },
                 phone: { type: 'string', minLength: 1, maxLength: 50 },
             },
-            required: ['user_id'],
+            required: ['userId'],
         };
     }
 }

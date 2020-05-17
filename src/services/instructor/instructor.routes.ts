@@ -20,11 +20,11 @@ export default [
             async (req: Request, res: Response) => {
                 const { instructorId } = req.user;
 
-                const { name, email: contact_email, phone } = req.body;
+                const { name, email, phone } = req.body;
 
                 const updatedInstructor = await InstructorService.updateInstructorInfo(instructorId, {
                     name,
-                    contact_email,
+                    email,
                     phone,
                 });
 

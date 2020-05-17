@@ -30,6 +30,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     if (process.env.NODE_ENV !== 'production') {
-        return knex.schema.dropTableIfExists('users');
-    }
+        return knex.raw(`DROP TYPE IF EXISTS user_role CASCADE`).then(() => {
+            return knex.schema.dropTableIfExists('users');
+        });
+    };
 };

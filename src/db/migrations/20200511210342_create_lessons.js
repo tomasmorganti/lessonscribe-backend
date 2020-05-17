@@ -39,6 +39,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     if (process.env.NODE_ENV !== 'production') {
-        return knex.schema.dropTableIfExists('lessons');
+        return knex.raw(`DROP TYPE IF EXISTS lesson_status CASCADE`).then(() => {
+            return knex.schema.dropTableIfExists('lessons');
+        });
     }
 };

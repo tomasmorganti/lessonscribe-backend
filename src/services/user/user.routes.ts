@@ -25,7 +25,7 @@ export default [
                 res.status(200).send({
                     id: createdUser.id,
                     email: createdUser.email,
-                    createdAt: createdUser.created_at,
+                    createdAt: createdUser.createdAt,
                 });
             },
         ],
@@ -52,7 +52,7 @@ export default [
                 res.status(200).send({
                     id: createdUser.id,
                     email: createdUser.email,
-                    createdAt: createdUser.created_at,
+                    createdAt: createdUser.createdAt,
                 });
             },
         ],

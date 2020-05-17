@@ -19,14 +19,14 @@ export default [
                 required: ['name'],
             }),
             async (req: Request, res: Response) => {
-                const instructor_id = req.user.instructorId;
+                const { instructorId } = req.user;
 
-                const { name, email: contact_email, phone, level } = req.body;
+                const { name, email, phone, level } = req.body;
 
                 const newStudent = await StudentService.createStudent({
-                    instructor_id,
+                    instructorId,
                     name,
-                    contact_email,
+                    email,
                     phone,
                     level,
                 });
@@ -58,7 +58,7 @@ export default [
                 ],
             }),
             async (req: Request, res: Response) => {
-                const instructor_id = req.user.instructorId;
+                const { instructorId } = req.user;
                 res.status(200).send('update student');
             },
         ],

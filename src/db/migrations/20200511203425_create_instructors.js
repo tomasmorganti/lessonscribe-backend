@@ -4,7 +4,7 @@ exports.up = function (knex) {
             table.increments().primary();
             table.integer('user_id').unsigned().notNullable();
             table.string('name');
-            table.string('contact_email').notNullable();
+            table.string('email').notNullable();
             table.string('phone');
             table.boolean('active').defaultTo(1);
             table.timestamp('created_at').defaultTo(knex.fn.now());

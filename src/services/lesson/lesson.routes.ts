@@ -19,21 +19,16 @@ export default [
                 required: ['studentId', 'startDatetime', 'endDatetime'],
             }),
             async (req: Request, res: Response) => {
-                const instructor_id = req.user.instructorId;
+                const { instructorId } = req.user;
 
-                const {
-                    studentId: student_id,
-                    status,
-                    startDatetime: start_datetime,
-                    endDatetime: end_datetime,
-                } = req.body;
+                const { studentId, status, startDatetime, endDatetime } = req.body;
 
                 const newLesson = await LessonService.createLesson({
-                    instructor_id,
-                    student_id,
+                    instructorId,
+                    studentId,
                     status,
-                    start_datetime,
-                    end_datetime,
+                    startDatetime,
+                    endDatetime,
                 });
 
                 res.status(200).send(newLesson);

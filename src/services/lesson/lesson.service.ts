@@ -1,14 +1,13 @@
 import Lesson from './lesson.model';
 import { getInstructorByUserId } from '../instructor/instructor.service';
 import { v4 as uuidv4 } from 'uuid';
-import { HTTP401Error } from '../../utils/httpErrors';
 
 type NewLessonData = {
-    instructor_id: number;
-    student_id: number;
+    instructorId: number;
+    studentId: number;
     status?: string;
-    start_datetime: Date;
-    end_datetime: Date;
+    startDatetime: Date;
+    endDatetime: Date;
 };
 
 export const createLesson = async (lessonData: NewLessonData) => {

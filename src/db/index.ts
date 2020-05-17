@@ -1,11 +1,11 @@
 import knex from 'knex';
-import { Model } from 'objection';
+import { Model, knexSnakeCaseMappers } from 'objection';
 
 const knexConfig = require('../../knexfile');
 
 export default async () => {
     console.log('Starting database connection...');
-    const db = knex(knexConfig);
+    const db = knex({ ...knexConfig, ...knexSnakeCaseMappers() });
     try {
         await db.raw('Select 1 + 1 as result');
         Model.knex(db);
