@@ -59,7 +59,21 @@ export default [
             }),
             async (req: Request, res: Response) => {
                 const { instructorId } = req.user;
-                res.status(200).send('update student');
+
+                const studentId = req.params.id;
+
+                const { name, email, phone, level, active } = req.body;
+
+                const updatedStudent = await StudentService.updateStudent(studentId, {
+                    instructorId,
+                    name,
+                    email,
+                    phone,
+                    level,
+                    active
+                });
+
+                res.status(200).send(updatedStudent);
             },
         ],
     },
